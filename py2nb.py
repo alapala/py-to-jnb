@@ -15,8 +15,15 @@ source_file = args.source
 
 nb = nbf.v4.new_notebook()
 try:
-    with open(source_file) as f:
-        code = f.read()
+    with open(source_file) as fp:
+        code = ''
+        for line in fp:
+            line_starts_new_cell = re.search('#[\s#]*(.*)-{4,}\s*$', line)
+            if line_starts_new_cell and len(code) > 0:
+                code_cell = nbf.v4.new_code_cell(code.rstrip())
+                nb.cells.append(code_cell)
+                code = ''
+            code += line
 except FileNotFoundError:
     print(
         "{}: {}: No such file".format(
@@ -25,8 +32,10 @@ except FileNotFoundError:
         ),
         file=sys.stderr
     )
-    exit(1)
-nb.cells.append(nbf.v4.new_code_cell(code))
+    sys.exit(1)
+if len(code) > 0:
+    code_cell = nbf.v4.new_code_cell(code.rstrip())
+    nb.cells.append(code_cell)
 
 dest_file = re.sub('\.py$', '.ipynb', source_file)
 if os.path.exists(dest_file):
