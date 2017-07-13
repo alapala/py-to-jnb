@@ -1,5 +1,10 @@
 # py-to-jnb
+
 Convert Python code file to Jupyter notebook
+
+`py_to_jnb.py` only converts code and uses RStudio-style section
+delimiters to identify the beginning of a cell. It doesn't recognize
+Markdown or raw cells.
 
 ## Similar utilities
 
