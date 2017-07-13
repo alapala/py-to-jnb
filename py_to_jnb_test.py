@@ -1,6 +1,6 @@
 import io
 import nbformat as nbf
-import py2nb
+import py_to_jnb
 import unittest
 
 
@@ -43,7 +43,7 @@ v = np.exp(x)
 '''.lstrip()
 
         codestream = io.StringIO(code)
-        nb = py2nb.notebook_cell_parse(codestream)
+        nb = py_to_jnb.notebook_cell_parse(codestream)
 
         outputstream = io.StringIO()
         nbf.write(nb, outputstream)
@@ -101,7 +101,7 @@ v = np.exp(x)
 '''.lstrip()
 
         codestream = io.StringIO(code)
-        nb = py2nb.notebook_cell_parse(codestream)
+        nb = py_to_jnb.notebook_cell_parse(codestream)
 
         outputstream = io.StringIO()
         nbf.write(nb, outputstream)
